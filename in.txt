@@ -1,5 +1,5 @@
 //sdk hss 
-ADD S2, S3, S1
+add S2 S3, S1
 
 dsdkd
 S
