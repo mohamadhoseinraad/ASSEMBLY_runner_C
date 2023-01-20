@@ -1,7 +1,9 @@
-//sdk hss 
-add S2 S3, S1
-
-dsdkd
-S
-
-s
+ADD S0, S1, S2
+AND S1, S1, S3
+JMP 6
+SUB S0, S1, S4
+OR S1, S1, S4
+SWP S1, S2
+JMP 2
+MOV S0, 42
+MOV S1, S5
