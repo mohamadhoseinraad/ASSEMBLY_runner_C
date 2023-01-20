@@ -23,6 +23,22 @@ void DUMP_REGS_F(int* S);
 void INPUT(int*S);
 void OUTPUT(int*S);
 
+
+void update_reg(int*SR , int var)
+{
+    if (var < 0)
+        SR[2] = 1;
+    else
+        SR[2] = 0;
+    if(var == 0)
+        SR[1] = 1;
+    else
+        SR[1] = 0;
+    if(count1s(var)%2 == 0)
+        SR[0] = 0;
+    else
+        SR[0] = 1;
+}
 int main()
 {
     return 0;
