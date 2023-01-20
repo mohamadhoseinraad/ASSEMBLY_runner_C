@@ -2,18 +2,16 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h> 
-int main()
+void readF(FILE *stream, char buf[][100])
 {
-    char buf[100][100];
     for (int l = 0; l < 100; l++)
     {
         for (int k = 0; k < 100; k++)
         {
             buf[l][k] = '\0';
         }
-    }  
+    }
     char c;
-    FILE *stream = fopen("in.txt", "r");
     int i =0,j=0;
     while ((c = fgetc(stream)) != EOF)
     {
@@ -48,9 +46,22 @@ int main()
             j++;
         }
     }
+}
+
+int main()
+{
+      
+    char buf[100][100];
+    FILE *stream = fopen("in.txt", "r");
+    readF(stream, buf);
+    
     char cmd[100];
+    
     sscanf(buf[0], "%s", cmd);
-    printf("%s\n",cmd);
+    
+    
+    
+
     int a,b,d;
     int check = sscanf(buf[0],"%s S%d, S%d, S%d",cmd,&a,&b,&d);
     if (check != 4)
