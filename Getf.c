@@ -33,11 +33,17 @@ int main()
         else if (c == '\n')
         {
             if(j!=0)
+            {
                 buf[i][j] = c;
-            
                 i++;
-                
                 j=0;
+            }
+            else
+            {
+                j=0;
+            }
+            
+            
         }
         else
         {
