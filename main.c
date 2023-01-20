@@ -179,7 +179,7 @@ int main()
             }
             else
             {
-                i = a - 1;
+                i = a - 2;
             }
             
         }
