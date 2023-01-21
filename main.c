@@ -35,6 +35,8 @@ int main()
 {
     int S[32];
     int SR[8];
+    int stack[100];
+    int last_stack = 0;
     char buf[100][100];
     char file_name[100];
     printf("plead enter your file name then press enter :");
@@ -192,6 +194,53 @@ int main()
                 {
                     i++;
                 }
+                
+            }
+        }
+        else if (strcmp(cmd, "PUSH") == 0 )
+        {
+            
+            int check = sscanf(buf[i],"%s S%d%s",cmd,&a,temp);
+            if (check != 2)
+            {
+                printf("Line %d : Erro use this cmd like this: %s S1\n",i+1,cmd);
+            }
+            else if (a < 0 || a > 31 )
+            {
+                printf("Line %d : Erro Register are/is out of range (must between 0-31)\n",i+1);
+            }
+            else
+            {
+                stack[last_stack] = S[a];
+                last_stack++;
+                if (last_stack > 99)
+                {
+                    printf("Warning : Stack is FULL\n");
+                }
+                
+                
+            }
+        }
+        else if (strcmp(cmd, "POP") == 0 )
+        {
+            
+            int check = sscanf(buf[i],"%s S%d%s",cmd,&a,temp);
+            if (check != 2)
+            {
+                printf("Line %d : Erro use this cmd like this: %s S1\n",i+1,cmd);
+            }
+            else if (a < 0 || a > 31 )
+            {
+                printf("Line %d : Erro Register are/is out of range (must between 0-31)\n",i+1);
+            }
+            else
+            {
+                S[a] = stack[last_stack];
+                if (last_stack != 0)
+                {
+                    last_stack--;
+                }
+                
                 
             }
         }
