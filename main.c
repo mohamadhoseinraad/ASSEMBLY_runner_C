@@ -7,6 +7,7 @@
 #define INT_MIN	-2147483648
 
 void read_f(FILE *stream, char buf[][100]);
+int count_line(char buf[][100]);
 
 
 int count1s(int N);
@@ -38,7 +39,13 @@ int main()
     FILE *stream = fopen("in.txt", "r");
     read_f(stream, buf);
     
-
+    int max_line = count_line(buf);
+    if (max_line == 0)
+    {
+        printf("ERROR : File is emity ! \n");
+        return 1;
+    }
+    
     for (int i = 0; buf[i][0] != '\0'; i++)
     {
         int a,b,d;
@@ -196,7 +203,7 @@ int main()
                 
                 printf("Line %d : Erro use this cmd like this: %s 2\n",i+1,cmd);
             }
-            else if (a < 0)
+            else if (a < 0 || a > max_line)
             {
                 printf("Line %d : JMP Out of range of file !\n",i+1);
             }
@@ -454,4 +461,17 @@ void read_f(FILE *stream, char buf[][100])
             j++;
         }
     }
+}
+int count_line(char buf[][100])
+{
+    for (int i = 0; i < 100; i++)
+    {
+        if (buf[i][0] == '\0')
+        {
+            return i;
+        }
+        
+    }
+    return 0;
+    
 }
