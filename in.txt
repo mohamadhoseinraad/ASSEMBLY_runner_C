@@ -1,7 +1,9 @@
-ADD S0, S1, S2
+DUMP_REGS // fgfgdgd
+ADD S0, S100, S2
+// ssk
 INPUT
-JMP 6
+JMP 6 
+EXIT
 SUB S0, S1, S4
 OR S1, S1, S4
-DUMP_REGS
 EXIT

@@ -43,19 +43,26 @@ int main()
     {
         int a,b,d;
         char cmd[100];
+        char temp[100];
         sscanf(buf[i], "%s", cmd);
 
         
         if (strcmp(cmd, "ADD") == 0 || strcmp(cmd, "SUB") == 0 || strcmp(cmd, "AND") == 0 || strcmp(cmd, "XOR") == 0 || strcmp(cmd, "OR") == 0)
         {
             
-            int check = sscanf(buf[i],"%s S%d, S%d, S%d",cmd,&a,&b,&d);
+            int check = sscanf(buf[i],"%s S%d, S%d, S%d%s",cmd,&a,&b,&d,temp);
             if (check != 4)
             {
                 printf("Line %d : Erro use this cmd like this: %s S1, S2, S3\n",i+1,cmd);
             }
+            else if (a < 0 || b < 0 || d < 0 || a > 31 || b > 31 || d > 31)
+            {
+                printf("Line %d : Erro Register are/is out of range (must between 0-31)\n",i+1);
+            }
+            
             else
             {
+                
                 if (strcmp(cmd, "AND") == 0)
                 {
                     and(S,a,b,d);
@@ -94,10 +101,14 @@ int main()
         else if (strcmp(cmd, "ADDI") == 0 || strcmp(cmd, "SUBI") == 0 || strcmp(cmd, "ANDI") == 0 || strcmp(cmd, "XORI") == 0 || strcmp(cmd, "ORI") == 0)
         {
             
-            int check = sscanf(buf[i],"%s S%d, S%d, %d",cmd,&a,&b,&d);
+            int check = sscanf(buf[i],"%s S%d, S%d, %d%s",cmd,&a,&b,&d,temp);
             if (check != 4)
             {
                 printf("Line %d : Erro use this cmd like this: %s S1, S2, S3\n",i+1,cmd);
+            }
+            else if (a < 0 || b < 0 || a > 31 || b > 31 )
+            {
+                printf("Line %d : Erro Register are/is out of range (must between 0-31)\n",i+1);
             }
             else
             {
@@ -139,10 +150,14 @@ int main()
         else if (strcmp(cmd, "SWP") == 0 )
         {
             
-            int check = sscanf(buf[i],"%s S%d, S%d",cmd,&a,&b);
+            int check = sscanf(buf[i],"%s S%d, S%d%s",cmd,&a,&b,temp);
             if (check != 3)
             {
                 printf("Line %d : Erro use this cmd like this: %s S1, S2\n",i+1,cmd);
+            }
+            else if (a < 0 || b < 0 || a > 31 || b > 31)
+            {
+                printf("Line %d : Erro Register are/is out of range (must between 0-31)\n",i+1);
             }
             else
             {
@@ -152,12 +167,16 @@ int main()
         else if (strcmp(cmd, "MOV") == 0 )
         {
             
-            int check = sscanf(buf[i],"%s S%d, S%d",cmd,&a,&b);
-            int check2 = sscanf(buf[i],"%s S%d, %d",cmd,&a,&b);
+            int check = sscanf(buf[i],"%s S%d, S%d%s",cmd,&a,&b,temp);
+            int check2 = sscanf(buf[i],"%s S%d, %d%s",cmd,&a,&b,temp);
             if (check != 3 && check2 !=3)
             {
                 
-                printf("Line %d : Erro use this cmd like this: %s S1, S2\n",i+i,cmd);
+                printf("Line %d : Erro use this cmd like this: %s S1, S2 or S1, 2\n",i+i,cmd);
+            }
+            else if (a < 0 || a > 31 || ((check == 3) && b < 0 || b > 31))
+            {
+                printf("Line %d : Erro Register are/is out of range (must between 0-31)\n",i+1);
             }
             else if(check2 == 3)
             {
@@ -171,11 +190,15 @@ int main()
         }
         else if (strcmp(cmd, "JMP") == 0 )
         {
-            int check = sscanf(buf[i],"%s %d",cmd,&a);
+            int check = sscanf(buf[i],"%s %d%s",cmd,&a,temp);
             if (check != 2 )
             {
                 
                 printf("Line %d : Erro use this cmd like this: %s 2\n",i+1,cmd);
+            }
+            else if (a < 0)
+            {
+                printf("Line %d : JMP Out of range of file !\n",i+1);
             }
             else
             {
@@ -185,22 +208,28 @@ int main()
         }
         else if (strcmp(cmd, "OUTPUT") == 0 || strcmp(cmd, "INPUT") == 0 || strcmp(cmd, "DUMP_REGS") == 0 || strcmp(cmd, "DUMP_REGS_F") == 0)
         {
-            sscanf(buf[i],"%s",cmd);
-            if (strcmp(cmd, "OUTPUT") == 0)
+            int check = sscanf(buf[i],"%s%s",cmd,temp);
+            if (check != 1)
             {
-                output(S);
+                printf("Line %d : Erro use this cmd like this: %s\n",i+1,cmd);
             }
-            else if (strcmp(cmd, "INPUT") == 0)
-            {
-                input(S);
-            }
-            else if (strcmp(cmd, "DUMP_REGS") == 0)
-            {
-                dump_regs(S,SR);
-            }
-            else if (strcmp(cmd, "DUMP_REGS_F") == 0)
-            {
-                dump_regs_f(S,SR);
+            else {
+                if (strcmp(cmd, "OUTPUT") == 0)
+                {
+                    output(S);
+                }
+                else if (strcmp(cmd, "INPUT") == 0)
+                {
+                    input(S);
+                }
+                else if (strcmp(cmd, "DUMP_REGS") == 0)
+                {
+                    dump_regs(S,SR);
+                }
+                else if (strcmp(cmd, "DUMP_REGS_F") == 0)
+                {
+                    dump_regs_f(S,SR);
+                }
             }
                         
         }
@@ -324,6 +353,7 @@ void dump_regs(int* S, int* SR)
     {
         printf("%d : %d | ",i, SR[i]);
     }
+    printf("\n");
     
 }
 void dump_regs_f(int* S, int* SR)
@@ -340,6 +370,7 @@ void dump_regs_f(int* S, int* SR)
     {
         fprintf(output, "%d : %d | ",i, SR[i]);
     }
+    fprintf(output,"\n");
     fclose(output);
 }
 void input(int*S)
@@ -383,12 +414,23 @@ void read_f(FILE *stream, char buf[][100])
     {
         if (c == '/' && (c = fgetc(stream)) == '/')
         {
-            while ((c = fgetc(stream)) != EOF && c != '\n')
+            if(j == 0)
             {
-                
+                while ((c = fgetc(stream)) != EOF && c != '\n')
+                {
+                    
+                }
+                j =0;
             }
-            j =0;
-            
+            else
+            {
+                while ((c = fgetc(stream)) != EOF && c != '\n')
+                {
+                    
+                }
+                j =0;
+                i++;
+            }
         }
         
         else if (c == '\n')
@@ -413,4 +455,3 @@ void read_f(FILE *stream, char buf[][100])
         }
     }
 }
-
