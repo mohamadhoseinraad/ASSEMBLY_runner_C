@@ -1,3 +1,24 @@
+/**************************************************************************//**
+ * @file Doxygen-test.c
+ * @brief شبیه ساز پردازنده - پروژه نهایی مبانی کامپیوتر
+ * 
+ * @version: V1.3.1
+ * @date: 21. january. 2023
+ * @author: Mh.Shabaniraad
+ * @note
+ * Before use app see manual of functions
+ * @warning
+ * Becarful in proccess system can crash
+ *
+ * \mainpage This is my final project in fundemental programming
+ * in KNTU
+ *
+ ******************************************************************************/
+
+/***********
+ * Include Files
+ * @brife includes
+ */
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
@@ -5,6 +26,10 @@
 
 #define INT_MAX	2147483647
 #define INT_MIN	-2147483648
+
+/********************************************//**
+ *  ... Read input file and copy in buf array each line
+ ***********************************************/
 
 void read_f(FILE *stream, char buf[][100]);
 int count_line(char buf[][100]);
