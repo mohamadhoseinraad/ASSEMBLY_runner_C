@@ -36,7 +36,10 @@ int main()
     int S[32];
     int SR[8];
     char buf[100][100];
-    FILE *stream = fopen("in.txt", "r");
+    char file_name[100];
+    printf("plead enter your file name then press enter :");
+    scanf("%s",file_name);
+    FILE *stream = fopen(file_name, "r");
     read_f(stream, buf);
     
     int max_line = count_line(buf);

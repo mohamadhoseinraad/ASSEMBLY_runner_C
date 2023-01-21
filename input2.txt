@@ -1,7 +1,6 @@
 DUMP_REGS // fgfgdgd
 ADD S0, S100, S2
 // ssk
-INPUT
 JMP 12
 EXIT
 SUB S0, S1, S4
