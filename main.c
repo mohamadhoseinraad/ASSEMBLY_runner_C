@@ -171,6 +171,27 @@ int main()
                 swp(S,a,b);
             }
         }
+        else if (strcmp(cmd, "SKIE") == 0 )
+        {
+            
+            int check = sscanf(buf[i],"%s S%d, S%d%s",cmd,&a,&b,temp);
+            if (check != 3)
+            {
+                printf("Line %d : Erro use this cmd like this: %s S1, S2\n",i+1,cmd);
+            }
+            else if (a < 0 || b < 0 || a > 31 || b > 31)
+            {
+                printf("Line %d : Erro Register are/is out of range (must between 0-31)\n",i+1);
+            }
+            else
+            {
+                if (S[a] == S[b])
+                {
+                    i++;
+                }
+                
+            }
+        }
         else if (strcmp(cmd, "MOV") == 0 )
         {
             
