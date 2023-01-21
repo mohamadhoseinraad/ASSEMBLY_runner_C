@@ -52,7 +52,7 @@ int main()
             int check = sscanf(buf[i],"%s S%d, S%d, S%d",cmd,&a,&b,&d);
             if (check != 4)
             {
-                printf("Erro use this cmd like this: %s S1, S2, S3\n",cmd);
+                printf("Line %d : Erro use this cmd like this: %s S1, S2, S3\n",i+1,cmd);
             }
             else
             {
@@ -97,7 +97,7 @@ int main()
             int check = sscanf(buf[i],"%s S%d, S%d, %d",cmd,&a,&b,&d);
             if (check != 4)
             {
-                printf("Erro use this cmd like this: %s S1, S2, S3\n",cmd);
+                printf("Line %d : Erro use this cmd like this: %s S1, S2, S3\n",i+1,cmd);
             }
             else
             {
@@ -142,7 +142,7 @@ int main()
             int check = sscanf(buf[i],"%s S%d, S%d",cmd,&a,&b);
             if (check != 3)
             {
-                printf("Erro use this cmd like this: %s S1, S2\n",cmd);
+                printf("Line %d : Erro use this cmd like this: %s S1, S2\n",i+1,cmd);
             }
             else
             {
@@ -157,7 +157,7 @@ int main()
             if (check != 3 && check2 !=3)
             {
                 
-                printf("Erro use this cmd like this: %s S1, S2\n",cmd);
+                printf("Line %d : Erro use this cmd like this: %s S1, S2\n",i+i,cmd);
             }
             else if(check2 == 3)
             {
@@ -175,7 +175,7 @@ int main()
             if (check != 2 )
             {
                 
-                printf("Erro use this cmd like this: %s 2\n",cmd);
+                printf("Line %d : Erro use this cmd like this: %s 2\n",i+1,cmd);
             }
             else
             {
@@ -210,7 +210,7 @@ int main()
         }
         else
         {
-            printf("%s comand is not define in this program ! \n",cmd);
+            printf("Line %d : %s comand is not define in this program ! \n",i+1,cmd);
         }
         
 
@@ -235,112 +235,94 @@ int count1s(int N)
 }
 int ADD(int* S,int indexF, int index1, int index2)
 {
-    if (((*(S+index1) + *(S+index2)) > INT_MAX) || ((*(S+index1) + *(S+index2)) < INT_MIN))
+    S[indexF] = S[index1] + S[index2];
+    if ((S[index1] + S[index2] > INT_MAX) || (S[index1] + S[index2] < INT_MIN))
     {
         return 1;
     }
-    *(S+indexF) = *(S+index1) + *(S+index2);
     return 0;
 }
 int SUB(int* S,int indexF, int index1, int index2)
 {
-    if (((*(S+index1) - *(S+index2)) > INT_MAX) || ((*(S+index1) - *(S+index2)) < INT_MIN))
+    S[indexF] = S[index1] - S[index2];
+    if ((S[index1] - S[index2] > INT_MAX) || (S[index1] - S[index2] < INT_MIN))
     {
         return 1;
     }
-    *(S+indexF) = *(S+index1) - *(S+index2);
     return 0;
 }
 int AND(int* S,int indexF, int index1, int index2)
 {
-    if (((*(S+index1) & *(S+index2)) > INT_MAX) || ((*(S+index1) & *(S+index2)) < INT_MIN))
-    {
-        return 1;
-    }
-    *(S+indexF) = *(S+index1) & *(S+index2);
+    
+    S[indexF] = S[index1] & S[index2];
     return 0;
 }
 int XOR(int* S,int indexF, int index1, int index2)
 {
-    if (((*(S+index1) ^ *(S+index2)) > INT_MAX) || ((*(S+index1) ^ *(S+index2)) < INT_MIN))
-    {
-        return 1;
-    }
-    *(S+indexF) = *(S+index1) ^ *(S+index2);
+    
+    S[indexF] = S[index1] ^ S[index2];
     return 0;
 }
 int OR(int* S,int indexF, int index1, int index2)
 {
-    if (((*(S+index1) | *(S+index2)) > INT_MAX) || ((*(S+index1) | *(S+index2)) < INT_MIN))
-    {
-        return 1;
-    }
-    *(S+indexF) = *(S+index1) | *(S+index2);
+    
+    S[indexF] = S[index1] | S[index2];
     return 0;
 }
 
 int ADDI(int* S,int indexF, int index1, int number)
 {
-    if (((*(S+index1) + number) > INT_MAX) || ((*(S+index1) + number) < INT_MIN))
+    S[indexF] = S[index1] + number;
+    if ((S[index1] + number > INT_MAX) || (S[index1] + number < INT_MIN))
     {
         return 1;
     }
-    *(S+indexF) = *(S+index1) + number;
     return 0;
 }
 int SUBI(int* S,int indexF, int index1, int number)
 {
-    if (((*(S+index1) - number) > INT_MAX) || ((*(S+index1) - number) < INT_MIN))
+    S[indexF] = S[index1] - number;
+    if ((S[index1] - number > INT_MAX) || (S[index1] - number < INT_MIN))
     {
         return 1;
     }
-    *(S+indexF) = *(S+index1) - number;
     return 0;
 }
 int ANDI(int* S,int indexF, int index1, int number)
 {
-    if (((*(S+index1) & number) > INT_MAX) || ((*(S+index1) & number) < INT_MIN))
-    {
-        return 1;
-    }
-    *(S+indexF) = *(S+index1) & number;
+    
+    S[indexF] = S[index1] & number;
     return 0;
 }
 int XORI(int* S,int indexF, int index1, int number)
 {
-    if (((*(S+index1) ^ number) > INT_MAX) || ((*(S+index1) ^ number) < INT_MIN))
-    {
-        return 1;
-    }
-    *(S+indexF) = *(S+index1) ^ number;
+    
+    S[indexF] = S[index1] ^ number;
     return 0;
 }
 int ORI(int* S,int indexF, int index1, int number)
 {
-    if (((*(S+index1) | number) > INT_MAX) || ((*(S+index1) | number) < INT_MIN))
-    {
-        return 1;
-    }
-    *(S+indexF) = *(S+index1) | number;
+    
+    S[indexF] = S[index1] | number;
     return 0;
 }
 void SWP(int* S,int index1, int index2)
 {
-    int temp = *(S+index1);
-    *(S+index1) = *(S+index2);
-    *(S+index2) = temp;
+    int temp = S[index1];
+    S[index1] = S[index2];
+    S[index2] = temp;
 }
 void DUMP_REGS(int* S, int* SR)
 {
     printf("Register : \n ");
     for (int i = 0; i < 32; i++)
     {
-        printf(" | %d : %d | ",i, *(S+i));
+        printf("%d : %d\n",i, S[i]);
     }
-    printf("\nRegister  Status: \n ");
+    printf("\nRegister  Status: \n");
     for (int i = 0; i < 8; i++)
     {
-        printf(" | %d : %d | ",i, *(SR+i));
+        printf("%d : %d | ",i, SR[i]);
     }
     
 }
@@ -351,12 +333,12 @@ void DUMP_REGS_F(int* S, int* SR)
     fprintf(output, "Register : \n ");
     for (int i = 0; i < 32; i++)
     {
-        fprintf(output, " | %d : %d | ",i, *(S+i));
+        fprintf(output, "%d : %d\n",i, S[i]);
     }
-    fprintf(output, "\nRegister Status : \n ");
+    fprintf(output, "\nRegister Status : \n");
     for (int i = 0; i < 32; i++)
     {
-        fprintf(output, " | %d : %d | ",i, *(SR+i));
+        fprintf(output, "%d : %d | ",i, SR[i]);
     }
     fclose(output);
 }
@@ -367,7 +349,7 @@ void INPUT(int*S)
 }
 void OUTPUT(int*S)
 {
-    printf("Register 0 is : %d \n",*(S));
+    printf("Register 0 is : %d \n",S[0]);
 }
 
 void update_reg(int*SR , int var)
