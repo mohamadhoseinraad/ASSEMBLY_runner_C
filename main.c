@@ -36,7 +36,7 @@ int main()
     int S[32];
     int SR[8];
     int stack[100];
-    int last_stack = 0;
+    int last_stack = -1;
     char buf[100][100];
     char file_name[100];
     printf("plead enter your file name then press enter :");
@@ -211,12 +211,17 @@ int main()
             }
             else
             {
-                stack[last_stack] = S[a];
-                last_stack++;
-                if (last_stack > 99)
+                
+                if (last_stack == 99)
                 {
-                    printf("Warning : Stack is FULL\n");
+                    printf("ERROR : Stack is FULL Cant PUSH it\n");
                 }
+                else
+                {
+                    last_stack++;
+                    stack[last_stack] = S[a];
+                }
+                
                 
                 
             }
@@ -235,11 +240,17 @@ int main()
             }
             else
             {
-                S[a] = stack[last_stack];
-                if (last_stack != 0)
+                if (last_stack < 0)
                 {
-                    last_stack--;
+                    printf("ERROR STack is empity\n");
                 }
+                else
+                {
+                    S[a] = stack[last_stack];
+                    last_stack--;
+                
+                }
+                
                 
                 
             }
