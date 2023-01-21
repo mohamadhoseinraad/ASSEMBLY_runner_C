@@ -6,27 +6,27 @@
 #define INT_MAX	2147483647
 #define INT_MIN	-2147483648
 
-void readF(FILE *stream, char buf[][100]);
+void read_f(FILE *stream, char buf[][100]);
 
 
 int count1s(int N);
-int ADD(int* S,int indexF, int index1, int index2);
-int SUB(int* S,int indexF, int index1, int index2);
-int AND(int* S,int indexF, int index1, int index2);
-int XOR(int* S,int indexF, int index1, int index2);
-int OR(int* S,int indexF, int index1, int index2);
+int add(int* S,int indexF, int index1, int index2);
+int sub(int* S,int indexF, int index1, int index2);
+int and(int* S,int indexF, int index1, int index2);
+int xor(int* S,int indexF, int index1, int index2);
+int or(int* S,int indexF, int index1, int index2);
 
-int ADDI(int* S,int indexF, int index1, int number);
-int SUBI(int* S,int indexF, int index1, int number);
-int ANDI(int* S,int indexF, int index1, int number);
-int XORI(int* S,int indexF, int index1, int number);
-int ORI(int* S,int indexF, int index1, int number);
+int addi(int* S,int indexF, int index1, int number);
+int subi(int* S,int indexF, int index1, int number);
+int andi(int* S,int indexF, int index1, int number);
+int xori(int* S,int indexF, int index1, int number);
+int ori(int* S,int indexF, int index1, int number);
 
-void SWP(int* S,int index1, int index2);
-void DUMP_REGS(int* S, int* SR);
-void DUMP_REGS_F(int* S, int* SR);
-void INPUT(int*S);
-void OUTPUT(int*S);
+void swp(int* S,int index1, int index2);
+void dump_regs(int* S, int* SR);
+void dump_regs_f(int* S, int* SR);
+void input(int*S);
+void output(int*S);
 
 void update_reg(int*SR , int var);
 
@@ -36,7 +36,7 @@ int main()
     int SR[8];
     char buf[100][100];
     FILE *stream = fopen("in.txt", "r");
-    readF(stream, buf);
+    read_f(stream, buf);
     
 
     for (int i = 0; buf[i][0] != '\0'; i++)
@@ -58,12 +58,12 @@ int main()
             {
                 if (strcmp(cmd, "AND") == 0)
                 {
-                    AND(S,a,b,d);
+                    and(S,a,b,d);
                     update_reg(SR,S[a]);
                 }
                 if (strcmp(cmd, "SUB") == 0)
                 {
-                    int overf = SUB(S,a,b,d);
+                    int overf = sub(S,a,b,d);
                     update_reg(SR,S[a]);
                     if (overf == 1)
                         SR[5] = 1;
@@ -72,7 +72,7 @@ int main()
                 }
                 if (strcmp(cmd, "ADD") == 0)
                 {
-                    int overf = ADD(S,a,b,d);
+                    int overf = add(S,a,b,d);
                     update_reg(SR,S[a]);
                     if (overf == 1)
                         SR[5] = 1;
@@ -81,12 +81,12 @@ int main()
                 }
                 if (strcmp(cmd, "XOR") == 0)
                 {
-                    XOR(S,a,b,d);
+                    xor(S,a,b,d);
                     update_reg(SR,S[a]);
                 }
                 if (strcmp(cmd, "OR") == 0)
                 {
-                    OR(S,a,b,d);
+                    or(S,a,b,d);
                     update_reg(SR,S[a]);
                 }
             }
@@ -103,12 +103,12 @@ int main()
             {
                 if (strcmp(cmd, "ANDI") == 0)
                 {
-                    ANDI(S,a,b,d);
+                    andi(S,a,b,d);
                     update_reg(SR,S[a]);
                 }
                 if (strcmp(cmd, "SUBI") == 0)
                 {
-                    int overf = SUBI(S,a,b,d);
+                    int overf = subi(S,a,b,d);
                     update_reg(SR,S[a]);
                     if (overf == 1)
                         SR[5] = 1;
@@ -117,7 +117,7 @@ int main()
                 }
                 if (strcmp(cmd, "ADDI") == 0)
                 {
-                    int overf = ADDI(S,a,b,d);
+                    int overf = addi(S,a,b,d);
                     update_reg(SR,S[a]);
                     if (overf == 1)
                         SR[5] = 1;
@@ -126,12 +126,12 @@ int main()
                 }
                 if (strcmp(cmd, "XORI") == 0)
                 {
-                    XORI(S,a,b,d);
+                    xori(S,a,b,d);
                     update_reg(SR,S[a]);
                 }
                 if (strcmp(cmd, "ORI") == 0)
                 {
-                    ORI(S,a,b,d);
+                    ori(S,a,b,d);
                     update_reg(SR,S[a]);
                 }
             }
@@ -146,7 +146,7 @@ int main()
             }
             else
             {
-                SWP(S,a,b);
+                swp(S,a,b);
             }
         }
         else if (strcmp(cmd, "MOV") == 0 )
@@ -188,19 +188,19 @@ int main()
             sscanf(buf[i],"%s",cmd);
             if (strcmp(cmd, "OUTPUT") == 0)
             {
-                OUTPUT(S);
+                output(S);
             }
             else if (strcmp(cmd, "INPUT") == 0)
             {
-                INPUT(S);
+                input(S);
             }
             else if (strcmp(cmd, "DUMP_REGS") == 0)
             {
-                DUMP_REGS(S,SR);
+                dump_regs(S,SR);
             }
             else if (strcmp(cmd, "DUMP_REGS_F") == 0)
             {
-                DUMP_REGS_F(S,SR);
+                dump_regs_f(S,SR);
             }
                         
         }
@@ -233,7 +233,7 @@ int count1s(int N)
     }
     return count1;
 }
-int ADD(int* S,int indexF, int index1, int index2)
+int add(int* S,int indexF, int index1, int index2)
 {
     S[indexF] = S[index1] + S[index2];
     if ((S[index1] + S[index2] > INT_MAX) || (S[index1] + S[index2] < INT_MIN))
@@ -242,7 +242,7 @@ int ADD(int* S,int indexF, int index1, int index2)
     }
     return 0;
 }
-int SUB(int* S,int indexF, int index1, int index2)
+int sub(int* S,int indexF, int index1, int index2)
 {
     S[indexF] = S[index1] - S[index2];
     if ((S[index1] - S[index2] > INT_MAX) || (S[index1] - S[index2] < INT_MIN))
@@ -251,26 +251,26 @@ int SUB(int* S,int indexF, int index1, int index2)
     }
     return 0;
 }
-int AND(int* S,int indexF, int index1, int index2)
+int and(int* S,int indexF, int index1, int index2)
 {
     
     S[indexF] = S[index1] & S[index2];
     return 0;
 }
-int XOR(int* S,int indexF, int index1, int index2)
+int xor(int* S,int indexF, int index1, int index2)
 {
     
     S[indexF] = S[index1] ^ S[index2];
     return 0;
 }
-int OR(int* S,int indexF, int index1, int index2)
+int or(int* S,int indexF, int index1, int index2)
 {
     
     S[indexF] = S[index1] | S[index2];
     return 0;
 }
 
-int ADDI(int* S,int indexF, int index1, int number)
+int addi(int* S,int indexF, int index1, int number)
 {
     S[indexF] = S[index1] + number;
     if ((S[index1] + number > INT_MAX) || (S[index1] + number < INT_MIN))
@@ -279,7 +279,7 @@ int ADDI(int* S,int indexF, int index1, int number)
     }
     return 0;
 }
-int SUBI(int* S,int indexF, int index1, int number)
+int subi(int* S,int indexF, int index1, int number)
 {
     S[indexF] = S[index1] - number;
     if ((S[index1] - number > INT_MAX) || (S[index1] - number < INT_MIN))
@@ -288,31 +288,31 @@ int SUBI(int* S,int indexF, int index1, int number)
     }
     return 0;
 }
-int ANDI(int* S,int indexF, int index1, int number)
+int andi(int* S,int indexF, int index1, int number)
 {
     
     S[indexF] = S[index1] & number;
     return 0;
 }
-int XORI(int* S,int indexF, int index1, int number)
+int xori(int* S,int indexF, int index1, int number)
 {
     
     S[indexF] = S[index1] ^ number;
     return 0;
 }
-int ORI(int* S,int indexF, int index1, int number)
+int ori(int* S,int indexF, int index1, int number)
 {
     
     S[indexF] = S[index1] | number;
     return 0;
 }
-void SWP(int* S,int index1, int index2)
+void swp(int* S,int index1, int index2)
 {
     int temp = S[index1];
     S[index1] = S[index2];
     S[index2] = temp;
 }
-void DUMP_REGS(int* S, int* SR)
+void dump_regs(int* S, int* SR)
 {
     printf("Register : \n ");
     for (int i = 0; i < 32; i++)
@@ -326,7 +326,7 @@ void DUMP_REGS(int* S, int* SR)
     }
     
 }
-void DUMP_REGS_F(int* S, int* SR)
+void dump_regs_f(int* S, int* SR)
 {
     FILE *output;
     output = fopen("regs.txt","w");
@@ -342,12 +342,12 @@ void DUMP_REGS_F(int* S, int* SR)
     }
     fclose(output);
 }
-void INPUT(int*S)
+void input(int*S)
 {
     printf("Please enter number in size of int to save in register 0 then press ENTER : ");
     scanf("%d",S);
 }
-void OUTPUT(int*S)
+void output(int*S)
 {
     printf("Register 0 is : %d \n",S[0]);
 }
@@ -368,7 +368,7 @@ void update_reg(int*SR , int var)
         SR[0] = 1;
 }
 
-void readF(FILE *stream, char buf[][100])
+void read_f(FILE *stream, char buf[][100])
 {
     for (int l = 0; l < 100; l++)
     {
