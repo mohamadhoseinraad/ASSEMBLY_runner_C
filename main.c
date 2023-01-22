@@ -60,6 +60,24 @@ int mull(int* S,int index1, int index2);
 
 void update_reg(int*SR , int var);
 
+void red () {
+  printf("\033[1;31m");
+}
+void green () {
+  printf("\033[0;32m");
+}
+void yellow () {
+  printf("\033[1;33m");
+}
+void reset () {
+  printf("\033[0m");
+}
+void blue () {
+  printf("\033[0;34m");
+}
+void cyan () {
+  printf("\033[0;36m");
+}
 int main()
 {
     int S[32];
@@ -68,20 +86,25 @@ int main()
     int last_stack = -1;
     char buf[100][100];
     char file_name[100];
+    cyan();
     printf("plead enter your file name then press enter :");
+    reset();
     scanf("%s",file_name);
     
     FILE *stream = fopen(file_name, "r");
     if (stream == NULL)
     {
+        red();
         printf("FILE is NULL or Not Found!\n");
+        return 1;
     }
     
     read_f(stream, buf);
-    
+    fclose(stream);
     int max_line = count_line(buf);
     if (max_line == 0)
     {
+        red();
         printf("ERROR : File is emity ! \n");
         return 1;
     }
@@ -100,11 +123,15 @@ int main()
             int check = sscanf(buf[i],"%s S%d, S%d, S%d%s",cmd,&a,&b,&d,temp);
             if (check != 4)
             {
+                red();
                 printf("Line %d : Erro use this cmd like this: %s S1, S2, S3\n",i+1,cmd);
+                reset();
             }
             else if (a < 0 || b < 0 || d < 0 || a > 31 || b > 31 || d > 31)
             {
+                red();
                 printf("Line %d : Erro Register are/is out of range (must between 0-31)\n",i+1);
+                reset();
             }
             
             else
@@ -151,11 +178,15 @@ int main()
             int check = sscanf(buf[i],"%s S%d, S%d, %d%s",cmd,&a,&b,&d,temp);
             if (check != 4)
             {
+                red();
                 printf("Line %d : Erro use this cmd like this: %s S1, S2, S3\n",i+1,cmd);
+                reset();
             }
             else if (a < 0 || b < 0 || a > 31 || b > 31 )
             {
+                red();
                 printf("Line %d : Erro Register are/is out of range (must between 0-31)\n",i+1);
+                reset();
             }
             else
             {
@@ -200,11 +231,15 @@ int main()
             int check = sscanf(buf[i],"%s S%d, S%d%s",cmd,&a,&b,temp);
             if (check != 3)
             {
+                red();
                 printf("Line %d : Erro use this cmd like this: %s S1, S2\n",i+1,cmd);
+                reset();
             }
             else if (a < 0 || b < 0 || a > 31 || b > 31)
             {
+                red();
                 printf("Line %d : Erro Register are/is out of range (must between 0-31)\n",i+1);
+                reset();
             }
             else
             {
@@ -217,11 +252,15 @@ int main()
             int check = sscanf(buf[i],"%s S%d, S%d%s",cmd,&a,&b,temp);
             if (check != 3)
             {
+                red();
                 printf("Line %d : Erro use this cmd like this: %s S1, S2\n",i+1,cmd);
+                reset();
             }
             else if (a < 0 || b < 0 || a > 31 || b > 31)
             {
+                red();
                 printf("Line %d : Erro Register are/is out of range (must between 0-31)\n",i+1);
+                reset();
             }
             else
             {
@@ -239,11 +278,15 @@ int main()
             int check = sscanf(buf[i],"%s S%d, S%d%s",cmd,&a,&b,temp);
             if (check != 3)
             {
+                red();
                 printf("Line %d : Erro use this cmd like this: %s S1, S2\n",i+1,cmd);
+                reset();
             }
             else if (a < 0 || b < 0 || a > 31 || b > 31)
             {
+                red();
                 printf("Line %d : Erro Register are/is out of range (must between 0-31)\n",i+1);
+                reset();
             }
             else
             {
@@ -257,11 +300,15 @@ int main()
             int check = sscanf(buf[i],"%s S%d, S%d%s",cmd,&a,&b,temp);
             if (check != 3)
             {
+                red();
                 printf("Line %d : Erro use this cmd like this: %s S1, S2\n",i+1,cmd);
+                reset();
             }
             else if (a < 0 || b < 0 || a > 31 || b > 31)
             {
+                red();
                 printf("Line %d : Erro Register are/is out of range (must between 0-31)\n",i+1);
+                reset();
             }
             else
             {
@@ -278,18 +325,24 @@ int main()
             int check = sscanf(buf[i],"%s S%d%s",cmd,&a,temp);
             if (check != 2)
             {
+                red();
                 printf("Line %d : Erro use this cmd like this: %s S1\n",i+1,cmd);
+                reset();
             }
             else if (a < 0 || a > 31 )
             {
+                red();
                 printf("Line %d : Erro Register are/is out of range (must between 0-31)\n",i+1);
+                reset();
             }
             else
             {
                 
                 if (last_stack == 99)
                 {
+                    yellow();
                     printf("ERROR : Stack is FULL Cant PUSH it\n");
+                    reset();
                 }
                 else
                 {
@@ -307,17 +360,23 @@ int main()
             int check = sscanf(buf[i],"%s S%d%s",cmd,&a,temp);
             if (check != 2)
             {
+                red();
                 printf("Line %d : Erro use this cmd like this: %s S1\n",i+1,cmd);
+                reset();
             }
             else if (a < 0 || a > 31 )
             {
+                red();
                 printf("Line %d : Erro Register are/is out of range (must between 0-31)\n",i+1);
+                reset();
             }
             else
             {
                 if (last_stack < 0)
                 {
+                    yellow();
                     printf("ERROR STack is empity\n");
+                    reset();
                 }
                 else
                 {
@@ -335,6 +394,7 @@ int main()
             
             int check = sscanf(buf[i],"%s S%d, S%d%s",cmd,&a,&b,temp);
             int check2 = sscanf(buf[i],"%s S%d, %d%s",cmd,&a,&b,temp);
+            red();
             if (check != 3 && check2 !=3)
             {
                 
@@ -352,11 +412,13 @@ int main()
             {
                 S[a] = S[b];
             }
+            reset();
             
         }
         else if (strcmp(cmd, "JMP") == 0 )
         {
             int check = sscanf(buf[i],"%s %d%s",cmd,&a,temp);
+            red();
             if (check != 2 )
             {
                 
@@ -371,13 +433,16 @@ int main()
                 i = a - 2;
             }
             
+            reset();
         }
         else if (strcmp(cmd, "OUTPUT") == 0 || strcmp(cmd, "INPUT") == 0 || strcmp(cmd, "DUMP_REGS") == 0 || strcmp(cmd, "DUMP_REGS_F") == 0)
         {
             int check = sscanf(buf[i],"%s%s",cmd,temp);
             if (check != 1)
             {
+                red();
                 printf("Line %d : Erro use this cmd like this: %s\n",i+1,cmd);
+                reset();
             }
             else {
                 if (strcmp(cmd, "OUTPUT") == 0)
@@ -405,12 +470,14 @@ int main()
         }
         else
         {
+            red();
             printf("Line %d : %s comand is not define in this program ! \n",i+1,cmd);
+            reset();
         }
         
 
     }
-
+    
     return 0;
 }
 
@@ -509,16 +576,21 @@ void swp(int* S,int index1, int index2)
 }
 void dump_regs(int* S, int* SR)
 {
+    green();
     printf("Register : \n ");
+    cyan();
     for (int i = 0; i < 32; i++)
     {
         printf("%d : %d\n",i, S[i]);
     }
+    green();
     printf("\nRegister  Status: \n");
+    cyan();
     for (int i = 0; i < 8; i++)
     {
         printf("%d : %d | ",i, SR[i]);
     }
+    reset();
     printf("\n");
     
 }
@@ -526,22 +598,29 @@ void dump_regs_f(int* S, int* SR)
 {
     FILE *output;
     output = fopen("regs.txt","w");
+    green();
     fprintf(output, "Register : \n ");
+    cyan();
     for (int i = 0; i < 32; i++)
     {
         fprintf(output, "%d : %d\n",i, S[i]);
     }
+    green();
     fprintf(output, "\nRegister Status : \n");
+    cyan();
     for (int i = 0; i < 32; i++)
     {
         fprintf(output, "%d : %d | ",i, SR[i]);
     }
+    reset();
     fprintf(output,"\n");
     fclose(output);
 }
 void input(int*S)
 {
+    cyan();
     printf("Please enter number in size of int to save in register 0 then press ENTER : ");
+    reset();
     scanf("%d",S);
 }
 void output(int*S)
