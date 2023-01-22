@@ -55,6 +55,8 @@ void input(int*S);
 void output(int*S);
 
 void div_s(int* S,int index1, int index2);
+int mull(int* S,int index1, int index2);
+
 
 void update_reg(int*SR , int var);
 
@@ -68,7 +70,13 @@ int main()
     char file_name[100];
     printf("plead enter your file name then press enter :");
     scanf("%s",file_name);
+    
     FILE *stream = fopen(file_name, "r");
+    if (stream == NULL)
+    {
+        printf("FILE is NULL or Not Found!\n");
+    }
+    
     read_f(stream, buf);
     
     int max_line = count_line(buf);
@@ -203,6 +211,28 @@ int main()
                 swp(S,a,b);
             }
         }
+        else if (strcmp(cmd, "MULL") == 0 )
+        {
+            
+            int check = sscanf(buf[i],"%s S%d, S%d%s",cmd,&a,&b,temp);
+            if (check != 3)
+            {
+                printf("Line %d : Erro use this cmd like this: %s S1, S2\n",i+1,cmd);
+            }
+            else if (a < 0 || b < 0 || a > 31 || b > 31)
+            {
+                printf("Line %d : Erro Register are/is out of range (must between 0-31)\n",i+1);
+            }
+            else
+            {
+                int overf = mull(S,a,b);
+                if (overf)
+                    SR[5] = 1;
+                else
+                    SR[5] = 0;
+                update_reg(SR,S[b]);
+            }
+        }
         else if (strcmp(cmd, "DIV") == 0 )
         {
             
@@ -217,8 +247,8 @@ int main()
             }
             else
             {
-                
                 div_s(S,a,b);
+                update_reg(SR,S[b]);
             }
         }
         else if (strcmp(cmd, "SKIE") == 0 )
@@ -608,4 +638,18 @@ void div_s(int* S,int index1, int index2)
 {
     S[index1] /= S[index2];
     S[index2] = S[index1] % S[index2]; 
+}
+int mull(int* S,int index1, int index2)
+{
+    int over;
+    int result = S[index1] * S[index2];
+    if (S[index1] * S[index2] > INT_MAX || S[index1] * S[index2] < INT_MIN)
+        over = 1;
+    else
+        over = 0;
+    S[index2] = result << 4;
+    S[index1] = result >> 4;
+    
+    return over;
+    
 }
