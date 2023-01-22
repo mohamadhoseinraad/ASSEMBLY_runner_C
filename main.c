@@ -54,6 +54,8 @@ void dump_regs_f(int* S, int* SR);
 void input(int*S);
 void output(int*S);
 
+void div_s(int* S,int index1, int index2);
+
 void update_reg(int*SR , int var);
 
 int main()
@@ -199,6 +201,24 @@ int main()
             else
             {
                 swp(S,a,b);
+            }
+        }
+        else if (strcmp(cmd, "DIV") == 0 )
+        {
+            
+            int check = sscanf(buf[i],"%s S%d, S%d%s",cmd,&a,&b,temp);
+            if (check != 3)
+            {
+                printf("Line %d : Erro use this cmd like this: %s S1, S2\n",i+1,cmd);
+            }
+            else if (a < 0 || b < 0 || a > 31 || b > 31)
+            {
+                printf("Line %d : Erro Register are/is out of range (must between 0-31)\n",i+1);
+            }
+            else
+            {
+                
+                div_s(S,a,b);
             }
         }
         else if (strcmp(cmd, "SKIE") == 0 )
@@ -583,4 +603,9 @@ int count_line(char buf[][100])
     }
     return 0;
     
+}
+void div_s(int* S,int index1, int index2)
+{
+    S[index1] /= S[index2];
+    S[index2] = S[index1] % S[index2]; 
 }
